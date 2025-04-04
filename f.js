@@ -229,7 +229,7 @@
         const tableWidth = table.offsetWidth;
         const windowWidth = window.innerWidth;
         const fontSizeVw = (tableWidth / windowWidth) * 3; 
-        table.style.fontSize = `${Math.max(2.0, Math.min(2.0, fontSizeVw))}vw`; 
+        table.style.fontSize = `${Math.max(1.5, Math.min(1.5, fontSizeVw))}vw`; 
         header.style.fontSize = `${Math.max(1, Math.min(1.6, fontSizeVw * 1.5))}vw`; 
       }
       

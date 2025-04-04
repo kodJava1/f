@@ -69,8 +69,7 @@
       }, 10000);
     }
     
-    function createTable() {
-      console.log("Tablo oluşturuluyor");
+    function createTable() {    
       
       const existingTable = document.getElementById('goalCancellationTable');
       if (existingTable) {
@@ -240,13 +239,13 @@
       
       resizeObserver.observe(table);
       
-      console.log("Tablo oluşturuldu");
+      
       
       return document.getElementById('goalCancellationTableBody');
     }
     
     function monitorScoreElements() {
-      console.log("Skor elementleri takip ediliyor");
+     
       const previousScores = new Map();
       
       function hasLongParenthesis(teamName) {
@@ -256,8 +255,7 @@
         let match;
         
         while ((match = parenthesisRegex.exec(teamName)) !== null) {
-          const contentInParenthesis = match[1].trim();
-          console.log("Parantez içi:", contentInParenthesis, "Uzunluk:", contentInParenthesis.length);
+          const contentInParenthesis = match[1].trim();          
           
           if (contentInParenthesis.length >= 4) {
             return true;
@@ -268,14 +266,14 @@
       }
       
       function findAndTrackScores() {
-        console.log("Skor elementleri aranıyor...");
+        
         const scoreElements = document.querySelectorAll('span.event-block-score__score--r0ZU9');
-        console.log(`${scoreElements.length} skor elementi bulundu`);
+        
         
         scoreElements.forEach(score => {
           if (!previousScores.has(score)) {
             const initialScore = score.textContent.trim();
-            console.log(`Yeni skor elementi izlemeye alındı: ${initialScore}`);
+            
             previousScores.set(score, initialScore);
             
             const observer = new MutationObserver((mutations) => {
@@ -295,15 +293,14 @@
       
       function checkScoreChange(scoreElement) {
         if (!document.body.contains(scoreElement)) {
-          console.log("Element DOM'da değil, izleme durduruldu");
+          
           return;
         }
         
         const currentScore = scoreElement.textContent.trim();
         const previousScore = previousScores.get(scoreElement);
         
-        if (previousScore && currentScore !== previousScore) {
-          console.log(`Skor değişti: ${previousScore} -> ${currentScore}`);
+        if (previousScore && currentScore !== previousScore) {         
           
           const prevParts = previousScore.split(':').map(Number);
           const currParts = currentScore.split(':').map(Number);
@@ -311,8 +308,7 @@
           const currTotal = currParts.reduce((a, b) => a + b, 0);
           
           if (currTotal < prevTotal) {
-            console.log("GOL GERİ ALINDI! Tabloya ekleniyor");
-            
+                        
             let teamNames = "Bilinmeyen";
             let parent = scoreElement.parentElement;
             for (let i = 0; i < 5 && parent; i++) {
@@ -324,8 +320,7 @@
               parent = parent.parentElement;
             }
             
-            if (hasLongParenthesis(teamNames)) {
-              console.log("Takım isminde uzun parantez içeriği bulundu, gol geri alma bildirimi iptal edildi:", teamNames);
+            if (hasLongParenthesis(teamNames)) {              
               return; 
             }
             
@@ -350,8 +345,7 @@
         let homeTeam = "Bilinmeyen";
         let awayTeam = "Bilinmeyen";
         
-        if (teams && teams !== "Bilinmeyen") {
-          console.log("Takımlar ayrılıyor: ", teams);
+        if (teams && teams !== "Bilinmeyen") {          
           
           if (teams.includes("—")) {
             const teamParts = teams.split("—");
@@ -380,9 +374,8 @@
             }
           } else {
             homeTeam = teams;
-          }
+          }          
           
-          console.log("Ayrılan takımlar:", homeTeam, awayTeam);
         }
         
         const row = document.createElement('tr');
@@ -402,9 +395,8 @@
       setInterval(findAndTrackScores, 1000);
     }
     
-    monitorScoreElements();
+    monitorScoreElements();    
     
-    console.log("Script yüklendi ve çalışıyor");
     
     setInterval(() => {
       const memory = getMemoryUsage();
@@ -412,21 +404,18 @@
       document.title = `${originalTitle} | Bellek kullanımı: ${memory}`;
     }, 3000);
 
-    function setupWeekendRefresh() {
-      console.log("Hafta sonu sayfa yenileme kontrol ediliyor");
+    function setupWeekendRefresh() {      
       
       setInterval(() => {
         const now = new Date();
         const day = now.getDay(); 
         
-        if (day === 0 || day === 6) {
-          console.log("Bugün hafta sonu, yenileme döngüsü aktif");
+        if (day === 0 || day === 6) {          
           
           const currentHour = now.getHours();
           const currentMinute = now.getMinutes();
           
-          if (currentMinute === 0) {
-            console.log(`Saat ${currentHour}:00, sayfa yenileniyor`);
+          if (currentMinute === 0) {            
             window.location.reload();
           }
         }

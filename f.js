@@ -1,1 +1,437 @@
-!function(){function e(){if(window.performance&&window.performance.memory){const e=window.performance.memory;return`${Math.round(e.usedJSHeapSize/1048576)} MB`}return"Bellek bilgisi alınamadı"}function n(){console.log("Tablo oluşturuluyor");const n=document.getElementById("goalCancellationTable");n&&n.parentNode.removeChild(n);const t=document.createElement("style");t.textContent="\n        #goalCancellationTable {\n          position: fixed;\n          top: 2vh;\n          right: 2vw;\n          z-index: 9999;\n          background: #fff;\n          border: 0.2vw solid red;\n          padding: 1vw;\n          width: 25vw;\n          max-height: 40vh;\n          overflow: auto;\n          box-shadow: 0 0 1vw rgba(0, 0, 0, 0.5);\n          font-size: 1.50vw;\n          border-radius: 0.5vw;\n          resize: both;\n          overflow: auto;\n        }\n        \n        #goalCancellationHeader {\n          padding: 0.5vw;\n          margin-bottom: 1vh;\n          background: #f0f0f0;\n          border-radius: 0.3vw;\n          cursor: move;\n          text-align: center;\n          color: red;\n          font-weight: bold;\n          font-size: 1.3vw;\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          user-select: none;\n        }\n        \n        #goalCancellationTable .resizer {\n          width: 1vw;\n          height: 1vw;\n          background: red;\n          position: absolute;\n          right: 0;\n          bottom: 0;\n          cursor: nwse-resize;\n        }\n        \n        #goalCancellationTable table {\n          width: 100%;\n          border-collapse: collapse;\n        }\n        \n        #goalCancellationTable th, #goalCancellationTable td {\n          border: 1px solid #ccc;\n          padding: 0.35vw;\n          text-align: center;\n        }\n      ",document.head.appendChild(t);const o=document.createElement("div");o.id="goalCancellationTable";const l=document.createElement("div");l.id="goalCancellationHeader";const i=document.createElement("span");i.textContent="Gol Geri Alma";const a=document.createElement("div");a.style.fontSize="0.7vw",a.style.color="#666",a.style.marginTop="0.3vw",a.textContent=`Bellek kullanımı: ${e()}`;const r=document.createElement("div");r.style.display="flex",r.style.flexDirection="column",r.style.alignItems="center",r.appendChild(i),r.appendChild(a),l.appendChild(r),setInterval((()=>function(n){n&&(n.textContent=`Bellek kullanımı: ${e()}`);const t=document.title.split(" | ")[0]||"Live bets on Football online – FON.BET";document.title=`${t} | Bellek kullanımı: ${e()}`}(a)),3e3);const d=document.createElement("div");d.innerHTML='\n        <table>\n          <thead>\n            <tr>\n              <th>Zaman</th> \n              <th>Ev Sahibi</th>\n              <th>Deplasman</th>\n              <th>Önceki</th>\n              <th>Yeni</th>\n            </tr>\n          </thead>\n          <tbody id="goalCancellationTableBody">\n          </tbody>\n        </table>\n      ';const s=document.createElement("div");s.className="resizer",o.appendChild(l),o.appendChild(d),o.appendChild(s),document.body.appendChild(o);let c,m,u=!1;l.addEventListener("mousedown",(function(e){u=!0;const n=o.getBoundingClientRect();c=e.clientX-n.left,m=e.clientY-n.top,o.style.opacity="0.8"})),document.addEventListener("mousemove",(function(e){if(!u)return;e.preventDefault();const n=e.clientX-c,t=e.clientY-m,l=window.innerWidth-o.offsetWidth,i=window.innerHeight-o.offsetHeight,a=Math.max(0,Math.min(n,l)),r=Math.max(0,Math.min(t,i));o.style.left=a+"px",o.style.top=r+"px",o.style.right="auto"})),document.addEventListener("mouseup",(function(){u=!1,o.style.opacity="1"}));return new ResizeObserver((()=>{!function(){const e=o.offsetWidth/window.innerWidth*3;o.style.fontSize=`${Math.max(2,Math.min(2,e))}vw`,l.style.fontSize=`${Math.max(1,Math.min(1.6,1.5*e))}vw`}()})).observe(o),console.log("Tablo oluşturuldu"),document.getElementById("goalCancellationTableBody")}console.log("Script başlatıldı"),window.goalCancellationMonitorActive?console.log("Script zaten çalışıyor"):(window.goalCancellationMonitorActive=!0,function(){console.log("Skor elementleri takip ediliyor");const e=new Map;function t(){console.log("Skor elementleri aranıyor...");const n=document.querySelectorAll("span.event-block-score__score--r0ZU9");console.log(`${n.length} skor elementi bulundu`),n.forEach((n=>{if(!e.has(n)){const t=n.textContent.trim();console.log(`Yeni skor elementi izlemeye alındı: ${t}`),e.set(n,t);new MutationObserver((t=>{t.forEach((t=>{!function(n){if(!document.body.contains(n))return void console.log("Element DOM'da değil, izleme durduruldu");const t=n.textContent.trim(),l=e.get(n);if(l&&t!==l){console.log(`Skor değişti: ${l} -> ${t}`);const i=l.split(":").map(Number),a=t.split(":").map(Number),r=i.reduce(((e,n)=>e+n),0);if(a.reduce(((e,n)=>e+n),0)<r){console.log("GOL GERİ ALINDI! Tabloya ekleniyor");let e="Bilinmeyen",i=n.parentElement;for(let n=0;n<5&&i;n++){const n=i.querySelector('a[data-testid="event"]');if(n){e=n.textContent.trim();break}i=i.parentElement}if(function(e){if(!e)return!1;const n=/\(([^)]+)\)/g;let t;for(;null!==(t=n.exec(e));){const e=t[1].trim();if(console.log("Parantez içi:",e,"Uzunluk:",e.length),e.length>=4)return!0}return!1}(e))return void console.log("Takım isminde uzun parantez içeriği bulundu, gol geri alma bildirimi iptal edildi:",e);!function(e,n,t){const l=o.querySelectorAll("tr");l.length>=5&&o.removeChild(l[0]);const i=new Date,a=`${String(i.getHours()).padStart(2,"0")}:${String(i.getMinutes()).padStart(2,"0")}:${String(i.getSeconds()).padStart(2,"0")}`;let r="Bilinmeyen",d="Bilinmeyen";if(t&&"Bilinmeyen"!==t){if(console.log("Takımlar ayrılıyor: ",t),t.includes("—")){const e=t.split("—");e.length>=2?(r=e[0].trim(),d=e[1].trim()):r=t}else if(t.includes(" - ")){const e=t.split(" - ");e.length>=2?(r=e[0].trim(),d=e[1].trim()):r=t}else if(t.includes(" vs ")){const e=t.split(" vs ");e.length>=2?(r=e[0].trim(),d=e[1].trim()):r=t}else r=t;console.log("Ayrılan takımlar:",r,d)}const s=document.createElement("tr");s.innerHTML=`\n          <td>${a}</td>\n          <td>${r}</td>\n          <td>${d}</td>\n          <td>${e}</td>\n          <td style="color:red; font-weight:bold;">${n}</td>\n        `,o.appendChild(s)}(l,t,e),function(e,n,t){const o=document.createElement("div");o.id="goalCancellationNotification",o.style.position="fixed",o.style.top="0",o.style.left="0",o.style.width="100%",o.style.background="rgba(255, 0, 0, 0.9)",o.style.color="white",o.style.padding="1vw",o.style.zIndex="10000",o.style.fontSize="2vw",o.style.fontWeight="bold",o.style.textAlign="center",o.style.boxShadow="0 0 2vw rgba(0, 0, 0, 0.5)",o.style.animation="fadeInOut 10s forwards",o.innerHTML=`\n        <div>⚠️ GOL SİLİNDİ! ⚠️</div>\n        <div style="font-size:1.5vw; margin-top:0.5vw;">${e}</div>\n        <div style="font-size:1.5vw; margin-top:0.5vw;">${n} → ${t}</div>\n      `;const l=document.createElement("style");l.textContent="\n        @keyframes fadeInOut {\n          0% { opacity: 0; transform: translateY(-100%); }\n          10% { opacity: 1; transform: translateY(0); }\n          90% { opacity: 1; transform: translateY(0); }\n          100% { opacity: 0; transform: translateY(-100%); }\n        }\n      ",document.head.appendChild(l),document.body.appendChild(o),setTimeout((()=>{o&&o.parentNode&&o.parentNode.removeChild(o)}),1e4)}(e,l,t)}e.set(n,t)}}(n)}))})).observe(n,{childList:!0,characterData:!0,subtree:!0})}}))}const o=n();t(),setInterval(t,3e3)}(),console.log("Script yüklendi ve çalışıyor"),setInterval((()=>{const n=e(),t=document.title.split(" | ")[0]||"Live bets on Football online – FON.BET";document.title=`${t} | Bellek kullanımı: ${n}`}),3e3),console.log("Hafta sonu sayfa yenileme kontrol ediliyor"),setInterval((()=>{const e=new Date,n=e.getDay();if(0===n||6===n){console.log("Bugün hafta sonu, yenileme döngüsü aktif");const n=e.getHours();0===e.getMinutes()&&(console.log(`Saat ${n}:00, sayfa yenileniyor`),window.location.reload())}}),6e4))}();
+(function() {
+    console.log("Script başlatıldı");
+    
+    if (window.goalCancellationMonitorActive) {
+      console.log("Script zaten çalışıyor");
+      return;
+    }
+    
+    window.goalCancellationMonitorActive = true;
+    
+    function getMemoryUsage() {
+      if (window.performance && window.performance.memory) {
+        const memory = window.performance.memory;
+        const usedMB = Math.round(memory.usedJSHeapSize / 1048576); 
+        return `${usedMB} MB`;
+      }
+      return "Bellek bilgisi alınamadı";
+    }
+    
+    function updateMemoryUsage(memoryElement) {
+      if (memoryElement) {
+        memoryElement.textContent = `Bellek kullanımı: ${getMemoryUsage()}`;
+      }
+      
+      const originalTitle = document.title.split(" | ")[0] || "Live Bets";
+      document.title = `${originalTitle} | Bellek kullanımı: ${getMemoryUsage()}`;
+    }
+    
+    function showNotification(teams, prevScore, newScore) {
+      const notification = document.createElement('div');
+      notification.id = 'goalCancellationNotification';
+      notification.style.position = 'fixed';
+      notification.style.top = '0';
+      notification.style.left = '0';
+      notification.style.width = '100%';
+      notification.style.background = 'rgba(255, 0, 0, 0.9)';
+      notification.style.color = 'white';
+      notification.style.padding = '1vw';
+      notification.style.zIndex = '10000';
+      notification.style.fontSize = '2vw';
+      notification.style.fontWeight = 'bold';
+      notification.style.textAlign = 'center';
+      notification.style.boxShadow = '0 0 2vw rgba(0, 0, 0, 0.5)';
+      notification.style.animation = 'fadeInOut 10s forwards'; 
+      
+      notification.innerHTML = `
+        <div>⚠️ GOL SİLİNDİ! ⚠️</div>
+        <div style="font-size:1.5vw; margin-top:0.5vw;">${teams}</div>
+        <div style="font-size:1.5vw; margin-top:0.5vw;">${prevScore} → ${newScore}</div>
+      `;
+      
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes fadeInOut {
+          0% { opacity: 0; transform: translateY(-100%); }
+          10% { opacity: 1; transform: translateY(0); }
+          90% { opacity: 1; transform: translateY(0); }
+          100% { opacity: 0; transform: translateY(-100%); }
+        }
+      `;
+      document.head.appendChild(style);
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        if (notification && notification.parentNode) {
+          notification.parentNode.removeChild(notification);
+        }
+      }, 10000);
+    }
+    
+    function createTable() {
+      console.log("Tablo oluşturuluyor");
+      
+      const existingTable = document.getElementById('goalCancellationTable');
+      if (existingTable) {
+        existingTable.parentNode.removeChild(existingTable);
+      }
+      
+      const style = document.createElement('style');
+      style.textContent = `
+        #goalCancellationTable {
+          position: fixed;
+          top: 2vh;
+          right: 2vw;
+          z-index: 9999;
+          background: #fff;
+          border: 0.2vw solid red;
+          padding: 1vw;
+          width: 25vw;
+          max-height: 40vh;
+          overflow: auto;
+          box-shadow: 0 0 1vw rgba(0, 0, 0, 0.5);
+          font-size: 1.50vw;
+          border-radius: 0.5vw;
+          resize: both;
+          overflow: auto;
+        }
+        
+        #goalCancellationHeader {
+          padding: 0.5vw;
+          margin-bottom: 1vh;
+          background: #f0f0f0;
+          border-radius: 0.3vw;
+          cursor: move;
+          text-align: center;
+          color: red;
+          font-weight: bold;
+          font-size: 1.3vw;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          user-select: none;
+        }
+        
+        #goalCancellationTable .resizer {
+          width: 1vw;
+          height: 1vw;
+          background: red;
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          cursor: nwse-resize;
+        }
+        
+        #goalCancellationTable table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+        
+        #goalCancellationTable th, #goalCancellationTable td {
+          border: 1px solid #ccc;
+          padding: 0.35vw;
+          text-align: center;
+        }
+      `;
+      document.head.appendChild(style);
+      
+      const table = document.createElement('div');
+      table.id = 'goalCancellationTable';
+      
+      const header = document.createElement('div');
+      header.id = 'goalCancellationHeader';
+      
+      const titleText = document.createElement('span');
+      titleText.textContent = 'Gol Geri Alma';
+      
+      const memoryInfo = document.createElement('div');
+      memoryInfo.style.fontSize = '0.7vw';
+      memoryInfo.style.color = '#666';
+      memoryInfo.style.marginTop = '0.3vw';
+      memoryInfo.textContent = `Bellek kullanımı: ${getMemoryUsage()}`;
+      
+      const titleContainer = document.createElement('div');
+      titleContainer.style.display = 'flex';
+      titleContainer.style.flexDirection = 'column';
+      titleContainer.style.alignItems = 'center';
+      titleContainer.appendChild(titleText);
+      titleContainer.appendChild(memoryInfo);
+      
+      header.appendChild(titleContainer);
+      
+      setInterval(() => updateMemoryUsage(memoryInfo), 3000);
+      
+      const content = document.createElement('div');
+      content.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Zaman</th> 
+              <th>Ev Sahibi</th>
+              <th>Deplasman</th>
+              <th>Önceki</th>
+              <th>Yeni</th>
+            </tr>
+          </thead>
+          <tbody id="goalCancellationTableBody">
+          </tbody>
+        </table>
+      `;
+      
+      const resizer = document.createElement('div');
+      resizer.className = 'resizer';
+      
+      table.appendChild(header);
+      table.appendChild(content);
+      table.appendChild(resizer);
+      document.body.appendChild(table);
+      
+      let isDragging = false;
+      let offsetX, offsetY;
+      
+      header.addEventListener('mousedown', startDrag);
+      document.addEventListener('mousemove', drag);
+      document.addEventListener('mouseup', stopDrag);
+      
+      function startDrag(e) {
+        isDragging = true;
+        const tableRect = table.getBoundingClientRect();
+        offsetX = e.clientX - tableRect.left;
+        offsetY = e.clientY - tableRect.top;
+        
+        table.style.opacity = '0.8';
+      }
+      
+      function drag(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        
+        const x = e.clientX - offsetX;
+        const y = e.clientY - offsetY;
+        
+        const maxX = window.innerWidth - table.offsetWidth;
+        const maxY = window.innerHeight - table.offsetHeight;
+        
+        const clampedX = Math.max(0, Math.min(x, maxX));
+        const clampedY = Math.max(0, Math.min(y, maxY));
+        
+        table.style.left = clampedX + 'px';
+        table.style.top = clampedY + 'px';
+        table.style.right = 'auto';
+      }
+      
+      function stopDrag() {
+        isDragging = false;
+        table.style.opacity = '1';
+      }
+      
+      function updateFontSize() {
+        const tableWidth = table.offsetWidth;
+        const windowWidth = window.innerWidth;
+        const fontSizeVw = (tableWidth / windowWidth) * 3; 
+        table.style.fontSize = `${Math.max(2.0, Math.min(2.0, fontSizeVw))}vw`; 
+        header.style.fontSize = `${Math.max(1, Math.min(1.6, fontSizeVw * 1.5))}vw`; 
+      }
+      
+      const resizeObserver = new ResizeObserver(() => {
+        updateFontSize();
+      });
+      
+      resizeObserver.observe(table);
+      
+      console.log("Tablo oluşturuldu");
+      
+      return document.getElementById('goalCancellationTableBody');
+    }
+    
+    function monitorScoreElements() {
+      console.log("Skor elementleri takip ediliyor");
+      const previousScores = new Map();
+      
+      function hasLongParenthesis(teamName) {
+        if (!teamName) return false;
+        
+        const parenthesisRegex = /\(([^)]+)\)/g;
+        let match;
+        
+        while ((match = parenthesisRegex.exec(teamName)) !== null) {
+          const contentInParenthesis = match[1].trim();
+          console.log("Parantez içi:", contentInParenthesis, "Uzunluk:", contentInParenthesis.length);
+          
+          if (contentInParenthesis.length >= 4) {
+            return true;
+          }
+        }
+        
+        return false;
+      }
+      
+      function findAndTrackScores() {
+        console.log("Skor elementleri aranıyor...");
+        const scoreElements = document.querySelectorAll('span.event-block-score__score--r0ZU9');
+        console.log(`${scoreElements.length} skor elementi bulundu`);
+        
+        scoreElements.forEach(score => {
+          if (!previousScores.has(score)) {
+            const initialScore = score.textContent.trim();
+            console.log(`Yeni skor elementi izlemeye alındı: ${initialScore}`);
+            previousScores.set(score, initialScore);
+            
+            const observer = new MutationObserver((mutations) => {
+              mutations.forEach(mutation => {
+                checkScoreChange(score);
+              });
+            });
+            
+            observer.observe(score, { 
+              childList: true, 
+              characterData: true,
+              subtree: true 
+            });
+          }
+        });
+      }
+      
+      function checkScoreChange(scoreElement) {
+        if (!document.body.contains(scoreElement)) {
+          console.log("Element DOM'da değil, izleme durduruldu");
+          return;
+        }
+        
+        const currentScore = scoreElement.textContent.trim();
+        const previousScore = previousScores.get(scoreElement);
+        
+        if (previousScore && currentScore !== previousScore) {
+          console.log(`Skor değişti: ${previousScore} -> ${currentScore}`);
+          
+          const prevParts = previousScore.split(':').map(Number);
+          const currParts = currentScore.split(':').map(Number);
+          const prevTotal = prevParts.reduce((a, b) => a + b, 0);
+          const currTotal = currParts.reduce((a, b) => a + b, 0);
+          
+          if (currTotal < prevTotal) {
+            console.log("GOL GERİ ALINDI! Tabloya ekleniyor");
+            
+            let teamNames = "Bilinmeyen";
+            let parent = scoreElement.parentElement;
+            for (let i = 0; i < 5 && parent; i++) {
+              const teamLink = parent.querySelector('a[data-testid="event"]');
+              if (teamLink) {
+                teamNames = teamLink.textContent.trim();
+                break;
+              }
+              parent = parent.parentElement;
+            }
+            
+            if (hasLongParenthesis(teamNames)) {
+              console.log("Takım isminde uzun parantez içeriği bulundu, gol geri alma bildirimi iptal edildi:", teamNames);
+              return; 
+            }
+            
+            addToTable(previousScore, currentScore, teamNames);
+            showNotification(teamNames, previousScore, currentScore);
+          }
+          
+          previousScores.set(scoreElement, currentScore);
+        }
+      }
+      
+      const tableBody = createTable();
+      function addToTable(previousScore, currentScore, teams) {
+        const rows = tableBody.querySelectorAll('tr');
+        if (rows.length >= 5) {
+          tableBody.removeChild(rows[0]);
+        }
+        
+        const now = new Date();
+        const time = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+        
+        let homeTeam = "Bilinmeyen";
+        let awayTeam = "Bilinmeyen";
+        
+        if (teams && teams !== "Bilinmeyen") {
+          console.log("Takımlar ayrılıyor: ", teams);
+          
+          if (teams.includes("—")) {
+            const teamParts = teams.split("—");
+            if (teamParts.length >= 2) {
+              homeTeam = teamParts[0].trim();
+              awayTeam = teamParts[1].trim();
+            } else {
+              homeTeam = teams;
+            }
+          } 
+          else if (teams.includes(" - ")) {
+            const teamParts = teams.split(" - ");
+            if (teamParts.length >= 2) {
+              homeTeam = teamParts[0].trim();
+              awayTeam = teamParts[1].trim();
+            } else {
+              homeTeam = teams;
+            }
+          } else if (teams.includes(" vs ")) {
+            const teamParts = teams.split(" vs ");
+            if (teamParts.length >= 2) {
+              homeTeam = teamParts[0].trim();
+              awayTeam = teamParts[1].trim();
+            } else {
+              homeTeam = teams;
+            }
+          } else {
+            homeTeam = teams;
+          }
+          
+          console.log("Ayrılan takımlar:", homeTeam, awayTeam);
+        }
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${time}</td>
+          <td>${homeTeam}</td>
+          <td>${awayTeam}</td>
+          <td>${previousScore}</td>
+          <td style="color:red; font-weight:bold;">${currentScore}</td>
+        `;
+        
+        tableBody.appendChild(row);
+      }
+      
+      findAndTrackScores();
+      
+      setInterval(findAndTrackScores, 1000);
+    }
+    
+    monitorScoreElements();
+    
+    console.log("Script yüklendi ve çalışıyor");
+    
+    setInterval(() => {
+      const memory = getMemoryUsage();
+      const originalTitle = document.title.split(" | ")[0] || "Live Bets";
+      document.title = `${originalTitle} | Bellek kullanımı: ${memory}`;
+    }, 3000);
+
+    function setupWeekendRefresh() {
+      console.log("Hafta sonu sayfa yenileme kontrol ediliyor");
+      
+      setInterval(() => {
+        const now = new Date();
+        const day = now.getDay(); 
+        
+        if (day === 0 || day === 6) {
+          console.log("Bugün hafta sonu, yenileme döngüsü aktif");
+          
+          const currentHour = now.getHours();
+          const currentMinute = now.getMinutes();
+          
+          if (currentMinute === 0) {
+            console.log(`Saat ${currentHour}:00, sayfa yenileniyor`);
+            window.location.reload();
+          }
+        }
+      }, 60000); 
+    }
+    
+    setupWeekendRefresh();
+  })();
